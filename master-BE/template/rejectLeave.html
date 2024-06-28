@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leave Rejection Notification</title>
+  </head>
+  <body style="font-family: Arial, sans-serif">
+    <div style="max-width: 600px; margin: 0 auto; padding: 20px">
+      <img
+        src="https://media.licdn.com/dms/image/D5612AQE1ca1QrtAePw/article-cover_image-shrink_720_1280/0/1684821533055?e=2147483647&v=beta&t=-nEPDWGr_hkbU_at_qn3_NMuD0pXKIEzWy2sg3_1CSQ"
+        alt="Logo"
+        width="200"
+        height="150"
+        style="display: block; margin: 0 auto"
+      />
+      <h2 style="text-align: center; color: #333">
+        Leave Rejection Notification
+      </h2>
+      <p>Dear {{name}},</p>
+
+      <p>We regret to inform you that your leave request has been rejected.</p>
+
+      <h3>Leave Details:</h3>
+      <ul>
+        <li>Requested Leave Dates: {{startDate}} to {{endDate}}</li>
+        <li>Reason for Leave: {{reason}}</li>
+      </ul>
+
+      <p>
+        Your leave request has been carefully reviewed, and unfortunately, it
+        does not meet the requirements for approval at this time.
+      </p>
+
+      <p>
+        If you have any questions or concerns, feel free to reach out to us at
+        <b>+91 1234567895</b>.
+      </p>
+
+      <p>Thank you for your understanding.</p>
+
+      <p>
+        Best regards,<br />
+        {{myname}}<br />
+        {{department}}<br />
+        Leave Management Website
+      </p>
+    </div>
+  </body>
+</html>
