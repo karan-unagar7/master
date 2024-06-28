@@ -5,10 +5,13 @@ import {
   setRejectedApi,
 } from "../../services/apiCall";
 import Table from "../common/Table";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 function ViewLeaveReport() {
   const [leaveData, setLeaveData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingAction, setLoadingAction] = useState(null); // New state for action loading
   const [leaveStatus, setLeaveStatus] = useState("all");
   const [sortConfig, setSortConfig] = useState({
     key: null,
@@ -71,6 +74,7 @@ function ViewLeaveReport() {
   }, [leaveData, sortConfig]);
 
   const handleApprove = async (row) => {
+    setLoadingAction(row.id);
     try {
       await setApprovedApi(row.id);
       const updatedData = leaveData.map((item) =>
@@ -79,10 +83,13 @@ function ViewLeaveReport() {
       setLeaveData(updatedData);
     } catch (error) {
       console.error("Failed to approve leave:", error);
+    } finally {
+      setLoadingAction(null);
     }
   };
 
   const handleReject = async (row) => {
+    setLoadingAction(row.id);
     try {
       await setRejectedApi(row.id);
       const updatedData = leaveData.map((item) =>
@@ -91,6 +98,8 @@ function ViewLeaveReport() {
       setLeaveData(updatedData);
     } catch (error) {
       console.error("Failed to reject leave:", error);
+    } finally {
+      setLoadingAction(null);
     }
   };
 
@@ -120,19 +129,27 @@ function ViewLeaveReport() {
       header: "Actions",
       render: (row) =>
         row.status === "Pending" ? (
-          <div className="flex space-x-2">
-            <button
-              onClick={() => handleApprove(row)}
-              className="text-green-700 bg-green-300 py-2 px-3 rounded hover:text-green-900"
-            >
-              Approve
-            </button>
-            <button
-              onClick={() => handleReject(row)}
-              className="text-red-700 bg-red-300 py-2 px-5 rounded hover:text-red-900"
-            >
-              Reject
-            </button>
+          <div className="flex justify-center gap-2">
+            {loadingAction === row.id ? (
+              <FontAwesomeIcon icon={faSpinner} spin className="mx-auto text-xl"/>
+            ) : (
+              <>
+                <button
+                  onClick={() => handleApprove(row)}
+                  className="text-green-700 bg-green-300 py-2 px-3 rounded hover:text-green-900"
+                  disabled={loadingAction === row.id}
+                >
+                  Approve
+                </button>
+                <button
+                  onClick={() => handleReject(row)}
+                  className="text-red-700 bg-red-300 py-2 px-5 rounded hover:text-red-900"
+                  disabled={loadingAction === row.id}
+                >
+                  Reject
+                </button>
+              </>
+            )}
           </div>
         ) : row.status === "Approved" ? (
           <p className="text-green-800 text-center">Approved</p>
@@ -141,6 +158,7 @@ function ViewLeaveReport() {
         ),
     },
   ];
+
   return (
     <Table
       columns={columns}

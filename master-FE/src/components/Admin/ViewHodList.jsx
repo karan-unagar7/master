@@ -3,6 +3,9 @@ import { deleteUserApi, getAllUserApi } from "../../services/apiCall";
 import Table from "../common/Table";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import "../../confimbox.css";
 
 function ViewHodList() {
   const [hodData, setHodData] = useState([]);
@@ -18,10 +21,10 @@ function ViewHodList() {
   const limit = 5;
 
   useEffect(() => {
-    const fetchLeavedData = async (page = 1, limit,search='') => {
+    const fetchLeavedData = async (page = 1, limit, search = "") => {
       try {
         setTimeout(async () => {
-          const response = await getAllUserApi("hod", page, limit,search);
+          const response = await getAllUserApi("hod", page, limit, search);
           const { data, maxPage } = response.data;
           setHodData(data);
           setTotalPages(maxPage);
@@ -31,8 +34,8 @@ function ViewHodList() {
         setLoading(false);
       }
     };
-    fetchLeavedData(currentPage,limit,searchTerm);
-  }, [currentPage,searchTerm]);
+    fetchLeavedData(currentPage, limit, searchTerm);
+  }, [currentPage, searchTerm]);
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1);
@@ -71,17 +74,35 @@ function ViewHodList() {
   };
 
   const handleDelete = async (row) => {
-    try {
-      const response = await deleteUserApi(row.id, "hod");
-      hodData.map((student) =>
-        student.id !== row.id
-          ? student
-          : setHodData(hodData.filter((student) => student.id !== row.id))
-      );
-      toast.success(response.data.message);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-alert-overlay">
+            <div className="custom-alert">
+              <h1>Confirm to delete</h1>
+              <p>Are you sure you want to delete this hod?</p>
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await deleteUserApi(row.id, "hod");
+                    setHodData(hodData.filter((hod) => hod.id !== row.id));
+                    toast.success(response.data.message);
+                  } catch (error) {
+                    toast.error(error.response.data.message);
+                  }
+                  onClose();
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={onClose} className="cancel">
+                No
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
   };
 
   const columns = [

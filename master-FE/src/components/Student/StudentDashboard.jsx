@@ -5,7 +5,7 @@ import {
   FaUser,
   FaUserCog,
 } from "react-icons/fa";
-import Dashboard from "../common/Dashboard";  
+import Dashboard from "../common/Dashboard";
 
 const cardData = [
   {

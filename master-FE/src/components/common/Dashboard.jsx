@@ -32,7 +32,6 @@ const Dashboard = ({ title, cardData }) => {
               icon={eachData.icon}
             />
           ))}
-
         </div>
       </div>
     </div>

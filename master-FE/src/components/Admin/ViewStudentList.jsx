@@ -3,6 +3,9 @@ import Table from "../common/Table";
 import { deleteUserApi, getAllUserApi } from "../../services/apiCall";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import "../../confimbox.css";
 
 function ViewStudentList() {
   const [studentData, setstudentData] = useState([]);
@@ -73,19 +76,37 @@ function ViewStudentList() {
   };
 
   const handleDelete = async (row) => {
-    try {
-      const response = await deleteUserApi(row.id, "student");
-      studentData.map((student) =>
-        student.id !== row.id
-          ? student
-          : setstudentData(
-              studentData.filter((student) => student.id !== row.id)
-            )
-      );
-      toast.success(response.data.message);
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-alert-overlay">
+            <div className="custom-alert">
+              <h1>Confirm to delete</h1>
+              <p>Are you sure you want to delete this student?</p>
+              <button
+                onClick={async () => {
+                  try {
+                    const response = await deleteUserApi(row.id, "student");
+                    setstudentData(
+                      studentData.filter((student) => student.id !== row.id)
+                    );
+                    toast.success(response.data.message);
+                  } catch (error) {
+                    toast.error(error.response.data.message);
+                  }
+                  onClose();
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={onClose} className="cancel">
+                No
+              </button>
+            </div>
+          </div>
+        );
+      },
+    });
   };
 
   const columns = [
