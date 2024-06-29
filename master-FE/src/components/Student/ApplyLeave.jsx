@@ -7,6 +7,8 @@ import { applyLeaveSchema } from "../../services/validationSchema";
 import { Toaster, toast } from "react-hot-toast";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 export default function ApplyLeave() {
   const [btnDis, setBtnDis] = useState(false);
@@ -130,7 +132,13 @@ export default function ApplyLeave() {
                   id="leaveType"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
-                  <option value="" label="Select Leave Type" />
+                  <option
+                    value=""
+                    label="Select Leave Type"
+                    disabled
+                    selected
+                    hidden
+                  />
                   <option value="FirstHalf" label="First Half" />
                   <option value="SecondHalf" label="Second Half" />
                   <option value="FullDay" label="Full Leave" />
@@ -174,7 +182,9 @@ export default function ApplyLeave() {
                   id="requestId"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
-                  <option value="" label="Select manager" />
+                  <option value="" disabled selected hidden>
+                    Select Faculty
+                  </option>
                   {faculty1.map((faculty) => (
                     <option key={faculty.id} value={faculty.id}>
                       {faculty.name}
@@ -198,7 +208,15 @@ export default function ApplyLeave() {
                   }
                 `}
               >
-                Submit
+                {btnDis ? (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    className="mx-auto text-xl"
+                  />
+                ) : (
+                  "Submit"
+                )}
               </button>
             </Form>
           )}

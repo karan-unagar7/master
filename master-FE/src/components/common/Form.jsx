@@ -4,6 +4,8 @@ import RadioGroup from "./Radio";
 import InputField from "./Input";
 import SelectField from "./Select";
 import { Toaster } from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const GenericForm = ({
   initialValues,
@@ -11,7 +13,7 @@ const GenericForm = ({
   onSubmit,
   fields,
   fileInputRef,
-  btnSize=false
+  btnSize = false,
 }) => {
   return (
     <section className="bg-gradient-to-r from-indigo-300 to-purple-300 min-h-screen flex items-center justify-center">
@@ -28,7 +30,11 @@ const GenericForm = ({
         >
           {({ setFieldValue }) => (
             <Form encType="multipart/form-data">
-              <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${btnSize ? 'md:grid-cols-1' : null}`}>
+              <div
+                className={`grid grid-cols-1 md:grid-cols-2 gap-4 ${
+                  btnSize ? "md:grid-cols-1" : null
+                }`}
+              >
                 {fields.items.map((field, index) => {
                   switch (field.type) {
                     case "input":
@@ -119,37 +125,37 @@ const GenericForm = ({
                 })}
               </div>
 
-             {fields.acceptingText && (
-              <div className="flex items-start mb-6">
-                <div className="flex items-center h-5">
-                  <Field
-                    type="checkbox"
-                    id="terms"
-                    name="terms"
-                    className="form-checkbox h-5 w-5 text-indigo-600"
-                  />
-                </div>
-                <div className="ml-3 text-sm">
-                  <label
-                    htmlFor="terms"
-                    className="font-medium text-gray-700 flex items-center"
-                  >
-                    I accept the{" "}
-                    <a
-                      href="#"
-                      className="text-indigo-600 hover:text-indigo-800 ml-1"
+              {fields.acceptingText && (
+                <div className="flex items-start mb-6">
+                  <div className="flex items-center h-5">
+                    <Field
+                      type="checkbox"
+                      id="terms"
+                      name="terms"
+                      className="form-checkbox h-5 w-5 text-indigo-600"
+                    />
+                  </div>
+                  <div className="ml-3 text-sm">
+                    <label
+                      htmlFor="terms"
+                      className="font-medium text-gray-700 flex items-center"
                     >
-                      Terms and Conditions
-                    </a>
-                  </label>
-                  <ErrorMessage
-                    name="terms"
-                    component="div"
-                    className="text-red-500 text-sm mt-2"
-                  />
+                      I accept the{" "}
+                      <a
+                        href="#"
+                        className="text-indigo-600 hover:text-indigo-800 ml-1"
+                      >
+                        Terms and Conditions
+                      </a>
+                    </label>
+                    <ErrorMessage
+                      name="terms"
+                      component="div"
+                      className="text-red-500 text-sm mt-2"
+                    />
+                  </div>
                 </div>
-              </div>
-             )}
+              )}
               <button
                 disabled={fields.btnDis}
                 type="submit"
@@ -161,7 +167,15 @@ const GenericForm = ({
                   }
                 `}
               >
-                {fields.submitButtonText}
+                {fields.btnDis ? (
+                  <FontAwesomeIcon
+                    icon={faSpinner}
+                    spin
+                    className="mx-auto text-xl"
+                  />
+                ) : (
+                  fields.submitButtonText
+                )}
               </button>
               {fields.footerText && (
                 <p className="text-center text-gray-700 mt-6">

@@ -35,6 +35,10 @@ const applyLeave = async (req, res) => {
       return res.status(400).json({ success: false, message: error.message });
     }
 
+    const startD = moment(startDate, "YYYY-MM-DD");
+    const endD = moment(endDate, "YYYY-MM-DD");
+    const totalDays = endD.diff(startD, "days");
+
     const userLeaveDetail = await findOneUserLeave(id);
 
     if (!userLeaveDetail) {
@@ -43,6 +47,12 @@ const applyLeave = async (req, res) => {
         .json({ success: false, message: errorMsg.userNotFound });
     }
 
+    if (totalDays > userLeaveDetail.availableLeave) {
+      return res.status(400).json({
+        success: false,
+        message: `Sorry, You can't apply for leave beacuse your available leave is ${userLeaveDetail.availableLeave}`,
+      });
+    }
     if (userLeaveDetail.availableLeave <= 0) {
       return res
         .status(400)

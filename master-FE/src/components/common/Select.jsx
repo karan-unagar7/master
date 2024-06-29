@@ -15,7 +15,7 @@ const SelectField = ({ name, label, options }) => {
         id={name}
         className="shadow appearance-none bg-white border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       >
-        <option value="">Select an option</option>
+        <option value="" disabled selected hidden>Select an option</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
