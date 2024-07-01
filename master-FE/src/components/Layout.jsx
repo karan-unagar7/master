@@ -19,8 +19,8 @@ export default function LayOut() {
       }
     };
     fetchProfile();
-  }, [setUser]);
-
+  }, []);
+ 
   const logout = () => {
     localStorage.removeItem("token");
   };

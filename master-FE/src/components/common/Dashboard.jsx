@@ -30,6 +30,7 @@ const Dashboard = ({ title, cardData }) => {
               title={eachData.title}
               description={eachData.description}
               icon={eachData.icon}
+              path={eachData.path}
             />
           ))}
         </div>

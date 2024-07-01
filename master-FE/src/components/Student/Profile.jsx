@@ -74,56 +74,66 @@ function Profile() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full">
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Personal Information
+              Personal Information :-
             </h2>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="inline-block text-gray-700 font-bold text-lg mb-2">
                 Name:
               </label>
-              <p className="text-gray-700">{user.name}</p>
+              <p className="inline-block text-gray-700 ml-2 text-lg capitalize">
+                {user.name}
+              </p>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="inline-block text-gray-700 font-bold text-lg mb-2">
                 Email:
               </label>
-              <p className="text-gray-700">{user.email}</p>
+              <p className="inline-block text-gray-700 ml-2 text-lg">
+                {user.email}
+              </p>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="inline-block text-gray-700 font-bold text-lg mb-2">
                 Gender:
               </label>
-              <p className="text-gray-700">{user.gender}</p>
+              <p className="inline-block text-gray-700 ml-2 text-lg capitalize">
+                {user.gender}
+              </p>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="inline-block text-gray-700 font-bold text-lg mb-2">
                 Phone:
               </label>
-              <p className="text-gray-700">{user.phone}</p>
+              <p className="inline-block text-gray-700 ml-2 text-lg">
+                {user.phone}
+              </p>
             </div>
           </div>
           <div>
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
-              Additional Information
+              Additional Information :-
             </h2>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="inline-block text-gray-700 font-bold text-lg mb-2 ">
                 Address:
               </label>
-              <p className="text-gray-700">{user.address}</p>
+              <p className="inline-block text-gray-700 text-lg ml-2 capitalize">
+                {user.address}
+              </p>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="inline-block text-gray-700 font-bold text-lg mb-2">
                 Department:
               </label>
-              <p className="text-gray-700">
+              <p className="inline-block text-gray-700 ml-2 text-lg">
                 {user.department ? user.department.toUpperCase() : ""}
               </p>
             </div>
             <div className="mb-4">
-              <label className="block text-gray-700 font-bold mb-2">
+              <label className="inline-block text-gray-700 font-bold text-lg mb-2">
                 Role:
               </label>
-              <p className="text-gray-700">
+              <p className="inline-block text-gray-700 ml-2 text-lg">
                 {user.roleId === 4
                   ? "STUDENT"
                   : user.roleId === 2
